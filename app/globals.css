@@ -1,13 +1,25 @@
-@tailwind base;
+
+/* 
+  Tailwind CSS 使用三个主要的层级来组织样式
+
+  base：基础样式层，用于定义全局样式和基础元素的样式，如 body、h1 等。
+  components：组件层，用于定义可复用的 UI 组件样式，例如按钮、卡片、导航栏等。
+  utilities：实用类层，用于定义小的、可组合的工具类样式，比如 bg-red-500、text-center 等。
+*/
+
+/* base 把默认的样式重置了 */
+/* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
 
+/* 定义css变量 全局范围；*/
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
+/* @media 是一个 CSS 指令 用于定义响应式设计的样式规则 */
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -16,18 +28,77 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* 
+示例用法
+1. 根据屏幕宽度调整样式
+在屏幕宽度小于或等于 600px 时应用这些样式
+@media (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
 }
 
+2. 根据屏幕方向调整样式
+在屏幕方向为竖屏时应用这些样式
+@media (orientation: portrait) {
+  body {
+    font-size: 16px;
+  }
+}
+
+3. 组合多个条件
+在屏幕宽度在 600px 到 1200px 之间且屏幕方向为横屏时应用这些样式
+@media (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
+  .container {
+    padding: 20px;
+  }
+}
+
+*/
+
+
+body {
+  /* var 引用 CSS 自定义属性（也称为 CSS 变量）*/
+  color: rgb(var(--foreground-rgb));
+  /* linear-gradient：用于创建线性渐变背景。它可以让背景色在指定的方向上逐渐过渡到另一个颜色 */
+  /* background: linear-gradient([方向], [颜色1], [颜色2], ...); */
+  background: linear-gradient(
+      to bottom,
+      /* transparent 用于设置颜色的透明度。它表示完全透明 */
+      transparent,
+      rgb(var(--background-end-rgb))
+    );
+    /* rgb(var(--background-start-rgb)); */
+}
+
+/* 用于向 Tailwind 的 utilities 层添加自定义实用类 */
+@layer utilities {
+  .text-balance {
+    /* text-wrap 用于控制文本的换行和内容的平衡。balance 使得长单词和长句子在多行文本块中尽可能平衡地分布。 */
+    text-wrap: balance;
+  }
+}
+
+/* 
+1. 添加基础样式
+  @layer base {
+    body {
+      font-family: Arial, sans-serif;
+    }
+  }
+2. 添加组件样式
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-500 text-white rounded;
+  }
+}
+3. 添加实用类
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
+
+
+*/
+
